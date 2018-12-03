@@ -8,9 +8,8 @@
 
 <body>
     {% for question in questions %}
-        {% with placeholder=question["placeholder"] %}
-            {% include "elements/"+question["type"]+".html" %}
-        {% endwith %}
+        <h2>{{ question["title"] }}</h2>
+        {% include "elements/"+question["type"]+".html" %}
         <br />
     {% endfor %}
 </body>
