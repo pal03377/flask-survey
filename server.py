@@ -43,9 +43,20 @@ def survey_post(slug):
     if survey_row is None:
         abort(404)
     code = code_access_check(slug)
-    print(dict(request.form))
+    form = {}
+    for question in json.loads(survey_row["questions"]):
+        answer = request.form.get("s_" + question["name"])
+        if answer:
+            form[question["name"]] = answer
+        elif question["required"]:
+            print(question)
+            abort(400)
+    survey_responses.insert(dict(survey=slug, response=json.dumps(form)))
     invalidate_code(slug, code)
-    return "sent"
+    return render_template(
+        "sent.html", 
+        title=survey_row["title"]
+    )
 
 
 @app.route("/s/<slug>", methods=["GET", "POST"])

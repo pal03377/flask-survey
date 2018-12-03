@@ -1,1 +1,2 @@
-<input name="s_{{ question['name'] }}" type="text" placeholder="{{ question['placeholder'] }}" />
+<input name="s_{{ question['name'] }}" type="text" 
+    placeholder="{{ question['placeholder'] }}" {{ "required" if question["required"] else "" }}/>
