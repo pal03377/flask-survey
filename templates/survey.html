@@ -3,10 +3,12 @@
 <html>
 
 <head>
-    <title>Survey</title>
+    <title>{{ title }}</title>
 </head>
 
 <body>
+    <h1>{{ title }}</h1>
+    <p>{{ description }}</p>
     {% for question in questions %}
         <h2>{{ question["title"] }}</h2>
         {% include "elements/"+question["type"]+".html" %}

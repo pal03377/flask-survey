@@ -1,0 +1,17 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+    {% for question in questions %}
+    <h2>{{ question["title"] }}</h2>
+    {% include "elements/"+question["type"]+".html" %}
+    <br />
+    {% endfor %}
+</body>
+
+</html>
