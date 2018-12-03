@@ -101,7 +101,7 @@ def survey(slug):
         return survey_post(slug)
 
 
-@app.route("/dashboard", methods=["GET", "POST"])
+@app.route("/dashboard")
 @requires_auth
 def dashboard():
     if request.args.get("view"):
@@ -126,6 +126,55 @@ def dashboard():
         "dashboard/dashboard.html",
         surveys=surveys.all()
     )
+
+
+def basic_slugify(title):
+    slug = ""
+    for s in title.lower().replace(" ", "-"):
+        if s in "abcdefghijklmnopqrstuvwxyz0123456789-_":
+            slug += s
+    return slug
+
+@app.route("/dashboard/create_survey", methods=["POST"])
+@requires_auth
+def create_survey():
+    title = request.form["title"]
+    slug = basic_slugify(title)
+    for s in title.lower().replace(" ", "-"):
+        if s in "abcdefghijklmnopqrstuvwxyz0123456789-_":
+            slug += s
+    description = request.form["description"]
+    questions = request.form["questions"]
+    questions_converted = []
+    for question in questions.split("\n"):
+        question = question.strip()
+        if question != "":
+            questions_converted.append({})
+            required = question[0] == "*"
+            if required:
+                question = question[1:]
+                question = question.strip()
+            q_type = "text-one-line"
+            if question[-1] == ")":
+                if "(" in question:
+                    q_type = "multiple-choice"
+                    options = question[question.rfind(
+                        "(")+1:question.rfind(")")].split("/")
+                    options = [option.strip() for option in options]
+                    options = list([{
+                        "value": basic_slugify(option), 
+                        "name": option
+                    } for option in options])
+                    questions_converted[-1]["options"] = options
+                    question = question[:question.rfind("(")]
+            questions_converted[-1]["type"] = q_type
+            questions_converted[-1]["title"] = question
+            questions_converted[-1]["placeholder"] = question
+            questions_converted[-1]["name"] = basic_slugify(question)
+            questions_converted[-1]["required"] = required
+    question_json = json.dumps(questions_converted)
+    surveys.insert(dict(slug=slug, title=title, description=description, questions=question_json))
+    return "Successfully created."
 
 
 if __name__ == "__main__":
