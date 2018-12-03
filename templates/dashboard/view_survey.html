@@ -4,12 +4,29 @@
 
 <head>
     <title>Dashboard - {{ survey["title"] }}</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Survey View: {{ survey["title"] }}</h1>
     <p>Description: {{ survey["description"] }}</p>
-    Responses: {{ responses }}
+    <p>Results:
+       <table>
+       {% for result in responses %}
+           <tr>
+               <td>{{result}}</td>
+               {% for answer in responses[result] %}
+                   <td>{{responses[result][answer]}}x {{answer}}</td>
+               {% endfor %}
+           </tr>
+       {% endfor %}
+       </table>
+    </p>
 </body>
 
 </html>
