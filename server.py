@@ -5,15 +5,22 @@ app = Flask(__name__)
 questions = [
     {
         "type": "text-one-line", 
-        "question": "Sag mal was.", 
+        "title": "Sag mal was.", 
         "placeholder": "Tipp: Lorem ipsum", 
         "name": "test1"
     }, 
     {
         "type": "text-one-line", 
-        "question": "Sag mal noch was.", 
+        "title": "Sag mal noch was.",
         "placeholder": "Tipp: Dolor sit", 
         "name": "test2"
+    },
+    {
+        "type": "multiple-choice", 
+        "title": "Wann wird dieses Projekt fertig?",
+        "placeholder": "Auswahlfrage", 
+        "name": "test3", 
+        "options": ["heute", "morgen", "in 3 Tagen", "nächste Woche", "irgendwann"]
     }
 ]
 
