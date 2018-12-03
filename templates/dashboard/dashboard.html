@@ -10,12 +10,31 @@
     <h1>Dashboard</h1>
     <h2>View</h2>
     <form method="GET">
-        <select name="view">
+        <select name="view" required>
         {% for survey in surveys %}
             <option value="{{ survey['slug'] }}">{{ survey['title'] }}</option>
         {% endfor %}
         </select>
         <button type="submit">View survey</button>
+    </form>
+    <h2>Create</h2>
+    <form action="/dashboard/create_survey" method="POST">
+        <h3>Title</h3>
+        <input type="text" placeholder="Title" name="title" required /><br />
+        <h3>Description</h3>
+        <textarea placeholder="Description" name="description" required></textarea>
+        <h3>Questions</h3>
+        <p>
+            One question per line. Questions are single-line text answer questions by default.<br />
+            Write options seperated by slashes in brackets after the question (e.g. "Do you like the color red? (yes/no)") to create fixed options.<br />
+            Prepend the question with an asterix (*) to make it required.<br />
+            <strong>Examples:</strong><br />
+            * What do you think of this?<br />
+            Do you like coffee? (yes/no)<br />
+            * Which of these shapes if your favourite? (square/triangle/circle)
+        </p>
+        <textarea name="questions" required></textarea>
+        <button type="submit">Create survey</button>
     </form>
 </body>
 

@@ -1,6 +1,6 @@
 <select name="s_{{ question['name'] }}" {{ "required" if question["required"] else "" }}>
     <option value="" disabled selected>{{ question["placeholder"] }}</option>
     {% for option in question["options"] %}
-        <option value="{{ question['name'] }}_option{{ loop.index0 }}">{{ option }}</option>
+        <option value="{{ option['value'] }}">{{ option['name'] }}</option>
     {% endfor %}
 </select>
