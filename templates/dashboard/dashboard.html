@@ -9,8 +9,8 @@
 <body>
     <h1>Dashboard</h1>
     <h2>View</h2>
-    <form method="POST">
-        <select name="survey_to_view">
+    <form method="GET">
+        <select name="view">
         {% for survey in surveys %}
             <option value="{{ survey['slug'] }}">{{ survey['title'] }}</option>
         {% endfor %}

@@ -104,13 +104,8 @@ def survey(slug):
 @app.route("/dashboard", methods=["GET", "POST"])
 @requires_auth
 def dashboard():
-    if request.method == "GET":
-        return render_template(
-            "dashboard/dashboard.html", 
-            surveys=surveys.all()
-        )
-    if "survey_to_view" in request.form:
-        slug = request.form.get("survey_to_view")
+    if request.args.get("view"):
+        slug = request.args.get("view")
         survey_row = surveys.find_one(slug=slug)
         if not survey_row:
             abort(404)
@@ -127,6 +122,10 @@ def dashboard():
             survey=dict(survey_row), 
             responses=resp_count
         )
+    return render_template(
+        "dashboard/dashboard.html",
+        surveys=surveys.all()
+    )
 
 
 if __name__ == "__main__":
