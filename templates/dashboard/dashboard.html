@@ -1,0 +1,22 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <h1>Dashboard</h1>
+    <h2>View</h2>
+    <form method="POST">
+        <select name="survey_to_view">
+        {% for survey in surveys %}
+            <option value="{{ survey['slug'] }}">{{ survey['title'] }}</option>
+        {% endfor %}
+        </select>
+        <button type="submit">View survey</button>
+    </form>
+</body>
+
+</html>

@@ -1,4 +1,5 @@
 from flask import *
+from collections import Counter
 import dataset
 import json
 
@@ -16,7 +17,7 @@ def code_access_check(slug):
     code = request.args.get("code") or request.args.get("c")
     if not code:
         abort(403)
-    if survey_codes.find_one(survey=slug, code=code) is None:
+    if not survey_codes.find_one(survey=slug, code=code):
         abort(403)
     return code
 
@@ -27,7 +28,7 @@ def invalidate_code(slug, code):
 
 def survey_get(slug):
     survey_row = surveys.find_one(slug=slug)
-    if survey_row is None:
+    if not survey_row:
         abort(404)
     code = code_access_check(slug)
     return render_template(
@@ -40,7 +41,7 @@ def survey_get(slug):
 
 def survey_post(slug):
     survey_row = surveys.find_one(slug=slug)
-    if survey_row is None:
+    if not survey_row:
         abort(404)
     code = code_access_check(slug)
     form = {}
@@ -65,6 +66,33 @@ def survey(slug):
         return survey_get(slug)
     elif request.method == "POST":
         return survey_post(slug)
+
+
+@app.route("/dashboard", methods=["GET", "POST"])
+def dashboard():
+    if request.method == "GET":
+        return render_template(
+            "dashboard/dashboard.html", 
+            surveys=surveys.all()
+        )
+    if "survey_to_view" in request.form:
+        slug = request.form.get("survey_to_view")
+        survey_row = surveys.find_one(slug=slug)
+        if not survey_row:
+            abort(404)
+        resp_count = {}
+        for resp in survey_responses.find(survey=slug):
+            resp = json.loads(resp["response"])
+            for name, value in resp.items():
+                resp_count.setdefault(name, Counter())
+                resp_count[name][value] += 1
+        for name in resp_count:
+            resp_count[name] = dict(resp_count[name])
+        return render_template(
+            "dashboard/view_survey.html", 
+            survey=dict(survey_row), 
+            responses=resp_count
+        )
 
 
 if __name__ == "__main__":
