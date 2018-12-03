@@ -1,5 +1,7 @@
 from flask import *
+from functools import wraps
 from collections import Counter
+from hashlib import sha512
 import dataset
 import json
 
@@ -11,6 +13,37 @@ db = dataset.connect(
 surveys = db["surveys"]
 survey_codes = db["survey_codes"]
 survey_responses = db["survey_responses"]
+
+
+with open("credentials.json") as f:
+    credentials_hash = json.load(f)
+
+
+# http://flask.pocoo.org/snippets/8/
+
+def check_auth(username, password):
+    if sha512((password + credentials_hash["salt"]).encode()).hexdigest() != credentials_hash["sha512"]:
+        return False
+    return username == "admin"
+
+
+def authenticate():
+    return Response(
+        'Could not verify your access level for that URL.\n'
+        'You have to login with proper credentials', 401,
+        {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+    return decorated
+
+# ---
 
 
 def code_access_check(slug):
@@ -69,6 +102,7 @@ def survey(slug):
 
 
 @app.route("/dashboard", methods=["GET", "POST"])
+@requires_auth
 def dashboard():
     if request.method == "GET":
         return render_template(
