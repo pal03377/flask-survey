@@ -4,6 +4,7 @@ from collections import Counter
 from hashlib import sha512
 import dataset
 import json
+import secrets
 
 app = Flask(__name__)
 
@@ -135,6 +136,7 @@ def basic_slugify(title):
             slug += s
     return slug
 
+
 @app.route("/dashboard/create_survey", methods=["POST"])
 @requires_auth
 def create_survey():
@@ -175,6 +177,32 @@ def create_survey():
     question_json = json.dumps(questions_converted)
     surveys.insert(dict(slug=slug, title=title, description=description, questions=question_json))
     return "Successfully created."
+
+
+def generate_random_sequence(length):
+    return "".join(
+        [secrets.choice("abcdefghijklmnopqrstuvwxyz1234567890") for i in range(length)])
+
+
+@app.route("/dashboard/generate_codes")
+@requires_auth
+def generate_codes():
+    survey = request.args.get("survey")
+    if not survey:
+        abort(400)
+    try:
+        number_of_codes = int(request.args.get("number_of_codes"))
+    except ValueError:
+        abort(400)
+    codes = [generate_random_sequence(8) for _ in range(number_of_codes)]
+    code_rows = [{"survey": survey, "code": code} for code in codes]
+    survey_codes.insert_many(list(code_rows))
+    return Response(
+        "\n".join(codes),
+        mimetype="text/csv",
+        headers={"Content-disposition":
+                 "attachment; filename={}-codes.csv".format(survey)})
+
 
 
 if __name__ == "__main__":

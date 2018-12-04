@@ -15,18 +15,23 @@
 <body>
     <h1>Survey View: {{ survey["title"] }}</h1>
     <p>Description: {{ survey["description"] }}</p>
-    <p>Results:
-       <table>
-       {% for result in responses %}
-           <tr>
-               <td>{{result}}</td>
-               {% for answer in responses[result] %}
-                   <td>{{responses[result][answer]}}x {{answer}}</td>
-               {% endfor %}
-           </tr>
-       {% endfor %}
-       </table>
-    </p>
+    <h2>Code generation</h2>
+    <form action="/dashboard/generate_codes" method="GET" target="_blank">
+        <input type="text" name="survey" value="{{ survey['slug'] }}" style="display: none;" />
+        <input type="number" min="1" value="20" name="number_of_codes" />
+        <button type="submit">Generate</button>
+    </form>
+    <h2>Results</h2>
+    <table>
+    {% for result in responses %}
+        <tr>
+            <td>{{result}}</td>
+            {% for answer in responses[result] %}
+                <td>{{responses[result][answer]}}x {{answer}}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
 </body>
 
 </html>
