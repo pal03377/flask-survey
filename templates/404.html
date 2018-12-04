@@ -1,19 +1,12 @@
-<!doctype html>
+{% extends "basic.html" %}
 
-<html>
+{% block title %}404{% endblock %}
 
-<head>
-    <title>404</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/survey.css') }}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
+{% block head %}
     <style>html, body {text-align: center;}</style>
-</head>
+{% endblock %}
 
-<body>
+{% block body %}
     <h1>404</h1>
     <p>{{ config.texts.not_found }}</p>
-    <footer id="legal"><a id="legal_link" href="/legal" title="{{ config.texts.legal }}">{{ config.texts.legal }}</a></footer>
-</body>
-
-</html>
+{% endblock %}

@@ -1,12 +1,7 @@
-<!doctype html>
+{% extends "basic.html" %}
 
-<html>
-
-<head>
-    <title>Dashboard</title>
-</head>
-
-<body>
+{% block title %}Dashboard{% endblock %}
+{% block body %}
     <h1>Dashboard</h1>
     <h2>View</h2>
     <form method="GET">
@@ -36,6 +31,4 @@
         <textarea name="questions" required></textarea>
         <button type="submit">Create survey</button>
     </form>
-</body>
-
-</html>
+{% endblock %}

@@ -1,16 +1,13 @@
-<!doctype html>
+{% extends "basic.html" %}
 
-<html>
+{% block title %}{{ title }}{% endblock %}
 
-<head>
-    <title>{{ title }}</title>
+{% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/survey.css') }}" />
     <meta name="Description" content="{{ description }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-</head>
+{% endblock %}
 
-<body>
+{% block body %}
     <form method="POST">
         <h1 id="title">{{ title }}</h1>
         <p id="description">{{ description }}</p>
@@ -30,6 +27,4 @@
         </div>
     </form>
     <footer id="legal"><a id="legal_link" href="/legal" title="{{ config.texts.legal }}">{{ config.texts.legal }}</a></footer>
-</body>
-
-</html>
+{% endblock %}

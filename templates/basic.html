@@ -1,0 +1,21 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/legal.css') }}" />
+    {% block head %}{% endblock %}
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+</head>
+
+<body>
+    {% block body %}{% endblock %}
+    {% block legal %}
+    <footer id="legal"><a id="legal_link" href="/legal" title="{{ config.texts.legal }}">{{ config.texts.legal }}</a></footer>
+    {% endblock %}
+</body>
+
+</html>

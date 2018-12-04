@@ -1,19 +1,14 @@
-<!doctype html>
+{% extends "basic.html" %}
 
-<html>
+{% block title %}{{ config.texts.thanks }} - {{ title }}{% endblock %}
 
-<head>
-    <title>{{ config.texts.thanks }} - {{ title }}</title>
+{% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sent.css') }}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-</head>
+{% endblock %}
 
-<body>
+{% block body %}
     <div>
         <h1>{{ config.texts.thanks }}</h1>
         <h2>🎉</h2>
     </div>
-</body>
-
-</html>
+{% endblock %}

@@ -1,18 +1,17 @@
-<!doctype html>
+{% extends "basic.html" %}
 
-<html>
+{% block title %}Dashboard - {{ survey["title"] }}
 
-<head>
-    <title>Dashboard - {{ survey["title"] }}</title>
+{% block head %}
     <style>
         table, th, td {
             border: 1px solid black;
             padding: 5px;
         }
     </style>
-</head>
+{% endblock %}
 
-<body>
+{% block head %}
     <h1>Survey View: {{ survey["title"] }}</h1>
     <p>Description: {{ survey["description"] }}</p>
     <h2>Code generation</h2>
@@ -43,6 +42,4 @@
         </tr>
     {% endfor %}
     </table>
-</body>
-
-</html>
+{% endblock %}
