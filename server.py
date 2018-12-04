@@ -194,6 +194,8 @@ def generate_codes():
         number_of_codes = int(request.args.get("number_of_codes"))
     except ValueError:
         abort(400)
+    except TypeError:
+        abort(400)
     codes = [generate_random_sequence(8) for _ in range(number_of_codes)]
     code_rows = [{"survey": survey, "code": code} for code in codes]
     survey_codes.insert_many(list(code_rows))
@@ -203,6 +205,18 @@ def generate_codes():
         headers={"Content-disposition":
                  "attachment; filename={}-codes.csv".format(survey)})
 
+
+@app.route("/dashboard/reset_survey")
+@requires_auth
+def reset_survey():
+    survey = request.args.get("survey")
+    if not survey:
+        abort(400)
+    if survey != request.args.get("survey_confirm"):
+        return "Please confirm that you want to reset the survey.", 400
+    survey_responses.delete(survey=survey)
+    survey_codes.delete(survey=survey)
+    return "Survey {} successfully reset.".format(survey)
 
 
 if __name__ == "__main__":

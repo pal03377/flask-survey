@@ -21,6 +21,17 @@
         <input type="number" min="1" value="20" name="number_of_codes" />
         <button type="submit">Generate</button>
     </form>
+    <h2>Reset</h2>
+    <form action="/dashboard/reset_survey" method="GET" target="_blank">
+        <p>
+            <strong>Warning:</strong> This option removes <strong>all</strong> existing codes and <strong>all</strong> existing results!
+            It does not remove the questions of the survey.
+        </p>
+        <input type="text" name="survey" value="{{ survey['slug'] }}" style="display: none;" />
+        <p>Please type the following text into this field to confirm you really want to reset the survey: {{ survey['slug'] }}</p>
+        <input type="text" name="survey_confirm" pattern="{{ survey['slug'] }}" placeholder="Reset confirmation" />
+        <button type="submit">Reset</button>
+    </form>
     <h2>Results</h2>
     <table>
     {% for result in responses %}
