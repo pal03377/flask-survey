@@ -1,6 +1,6 @@
 {% extends "basic.html" %}
 
-{% block title %}Dashboard - {{ survey["title"] }}
+{% block title %}Dashboard - {{ survey["title"] }}{% endblock %}
 
 {% block head %}
     <style>
@@ -11,7 +11,7 @@
     </style>
 {% endblock %}
 
-{% block head %}
+{% block body %}
     <h1>Survey View: {{ survey["title"] }}</h1>
     <p>Description: {{ survey["description"] }}</p>
     <h2>Code generation</h2>
