@@ -10,7 +10,7 @@
 {% block body %}
     <form method="POST">
         <h1 id="title">{{ title }}</h1>
-        <p id="description">{{ description }}</p>
+        <p id="description">{{ description|nl2br }}</p>
         <div id="questions">
             {% for question in questions %}
                 <div class="question">
