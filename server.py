@@ -219,5 +219,10 @@ def reset_survey():
     return "Survey {} successfully reset.".format(survey)
 
 
+@app.route("/legal")
+def legal():
+    return render_template("legal.html")
+
+
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)
