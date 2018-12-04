@@ -4,20 +4,29 @@
 
 <head>
     <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/survey.css') }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
 </head>
 
 <body>
     <form method="POST">
-        <h1>{{ title }}</h1>
-        <p>{{ description }}</p>
-        {% for question in questions %}
-            <h2>{{ question["title"] }}</h2>
-            {% include "elements/"+question["type"]+".html" %}
-            <br />
-        {% endfor %}
-        <br />
+        <h1 id="title">{{ title }}</h1>
+        <p id="description">{{ description }}</p>
+        <div id="questions">
+            {% for question in questions %}
+                <div class="question">
+                    <h2 class="title">{{ question["title"] }}</h2>
+                    {% include "elements/"+question["type"]+".html" %}
+                </div>
+            {% endfor %}
+        </div>
+        <br /><br />
         <input type="text" name="code" value="{{ code }}" style="display: none;" />
-        <button type="submit">-></button>
+        <div id="button-container">
+            <p id="code-display">(Code: {{ code }})</p>
+            <button type="submit">➡</button>
+        </div>
     </form>
 </body>
 
