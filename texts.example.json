@@ -1,0 +1,8 @@
+{
+    "code": "code",
+    "invalid_code": "Invalid code",
+    "invalid_code_explaination": "You entered an invalid code. Maybe you already used it?", 
+    "legal": "legal",
+    "thanks": "Thanks!",
+    "legal_html": "Impress: ..."
+}

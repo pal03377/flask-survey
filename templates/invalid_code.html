@@ -1,0 +1,24 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <title>{{ config.texts.invalid_code }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/survey.css') }}" />
+    <meta name="Description" content="{{ description }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>html, body {text-align: center;}</style>
+</head>
+
+<body>
+    <h1 id="title">{{ config.texts.invalid_code }}</h1>
+    <p>{{ config.texts.invalid_code_explaination }}</p>
+    <form method="GET">
+        <input type="text" placeholder="{{ config.texts.code }}" name="code" /><br /><br />
+        <button type="submit">➡</button>
+    </form>
+    <footer id="legal"><a id="legal_link" href="/legal" title="{{ config.texts.legal }}">{{ config.texts.legal }}</a></footer>
+</body>
+
+</html>

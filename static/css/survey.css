@@ -16,8 +16,11 @@ form {
 
 #button-container {
     width: 100%;
-    max-width: 300px;
     text-align: center;
+}
+
+#button-container, button[type="submit"] {
+    max-width: 300px;
 }
 
 #code-display {

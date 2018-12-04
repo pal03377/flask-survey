@@ -3,6 +3,7 @@ from functools import wraps
 from collections import Counter
 from hashlib import sha512
 import dataset
+import codecs
 import json
 import secrets
 
@@ -16,7 +17,10 @@ survey_codes = db["survey_codes"]
 survey_responses = db["survey_responses"]
 
 
-with open("credentials.json") as f:
+with codecs.open("texts.json", "rb", "utf-8") as f:
+    app.config["texts"] = json.load(f)
+
+with codecs.open("credentials.json", "rb", "utf-8") as f:
     credentials_hash = json.load(f)
 
 
@@ -50,9 +54,9 @@ def requires_auth(f):
 def code_access_check(slug):
     code = request.args.get("code") or request.args.get("c")
     if not code:
-        abort(403)
+        abort(403, "no_code_found")
     if not survey_codes.find_one(survey=slug, code=code):
-        abort(403)
+        abort(403, "invalid_code")
     return code
 
 
@@ -222,6 +226,15 @@ def reset_survey():
 @app.route("/legal")
 def legal():
     return render_template("legal.html")
+
+
+@app.errorhandler(403)
+def access_denied(error):
+    if error.description == "no_code_found":
+        return render_template("enter_code.html")
+    elif error.description == "invalid_code":
+        return render_template("invalid_code.html")
+    return error.description
 
 
 if __name__ == "__main__":

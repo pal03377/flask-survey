@@ -3,13 +3,15 @@
 <html>
 
 <head>
-    <title>Legal</title>
+    <title>{{ config.texts.legal }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/legal.css') }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
 </head>
 
 <body>
-
+    <h1>{{ config.texts.legal }}</h1>
+    <p>{{ config.texts.legal_html|safe }}</p>
 </body>
 
 </html>

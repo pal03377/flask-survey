@@ -3,11 +3,15 @@
 <html>
 
 <head>
-    <title>{{ title }}</title>
+    <title>{{ config.texts.thanks }} - {{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sent.css') }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
 </head>
 
 <body>
-    {{ title }} sent.
+    <h1>{{ config.texts.thanks }}</h1>
+    {{ title }}
 </body>
 
 </html>
