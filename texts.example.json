@@ -4,5 +4,6 @@
     "invalid_code_explaination": "You entered an invalid code. Maybe you already used it?", 
     "legal": "legal",
     "thanks": "Thanks!",
-    "legal_html": "Impress: ..."
+    "legal_html": "Impress: ...", 
+    "not_found": "This page could not be found."
 }
