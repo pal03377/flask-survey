@@ -1,0 +1,11 @@
+[Unit]
+Description=uWSGI instance to serve the flask-survey
+After=network.target
+
+[Service]
+User=user
+ExecStart=/home/user/venv/bin/uwsgi --ini /home/user/flask-survey/uwsgi.ini
+RuntimeDirectory=user
+
+[Install]
+WantedBy=multi-user.target

@@ -2,6 +2,9 @@ credentials.json
 texts.json
 data.db
 
+flask-survey.service
+uwsgi.ini
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
