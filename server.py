@@ -164,9 +164,6 @@ def basic_slugify(title):
 def create_survey():
     title = request.form["title"]
     slug = basic_slugify(title)
-    for s in title.lower().replace(" ", "-"):
-        if s in "abcdefghijklmnopqrstuvwxyz0123456789-_":
-            slug += s
     description = request.form["description"]
     questions = request.form["questions"]
     questions_converted = []
