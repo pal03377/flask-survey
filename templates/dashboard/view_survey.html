@@ -36,7 +36,7 @@
     {% for result in responses %}
         <tr>
             <td>{{result}}</td>
-            {% for answer in responses[result] %}
+            {% for answer in responses[result]|sort() %}
                 <td>{{responses[result][answer]}}x {{answer}}</td>
             {% endfor %}
         </tr>
