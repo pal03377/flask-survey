@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=user
 ExecStart=/home/user/flask-survey/venv/bin/uwsgi --ini /home/user/flask-survey/uwsgi.ini
-RuntimeDirectory=user
+RuntimeDirectory=flask-survey
 
 [Install]
 WantedBy=multi-user.target
